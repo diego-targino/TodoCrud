@@ -6,6 +6,12 @@ import {
 } from "./database/dataManager.js";
 import { itemList } from "./componets/itemList.js";
 import { noContent } from "./componets/noContent.js";
+import {
+  alterInput,
+  alterDeleteButton,
+  alterEditButtom,
+  onDoneTask,
+} from "./changeComponents.js";
 
 var listBox = document.getElementById("list-box");
 
@@ -21,9 +27,7 @@ function displayList() {
     for (let item of savedList) {
       listBox.innerHTML += itemList(item);
     }
-  } else {
-    listBox.innerHTML += noContent();
-  }
+  } else listBox.innerHTML += noContent();
 }
 
 function onChangeNewItem() {
@@ -51,52 +55,15 @@ function removeItem(itemId) {
 }
 
 function editItem(itemId) {
-  let valueInput = document.getElementById("input_" + itemId);
-  alterInput(valueInput);
-
-  let deleteButton = document.getElementById("remove_" + itemId);
-  alterDeleteButton(deleteButton, itemId);
-
-  let editionButton = document.getElementById("edit_" + itemId);
-  alterEditButtom(editionButton, itemId);
+  alterInput(itemId);
+  alterDeleteButton(closeItemEdit, itemId);
+  alterEditButtom(saveItemChages, itemId);
   document.getElementById("checkbox_" + itemId).disabled = true;
-
-  valueInput.onkeyup = function () {
-    if (valueInput.value && valueInput.value.length > 0)
-      editionButton.disabled = false;
-    else editionButton.disabled = true;
-  };
-  if (newItem.value && newItem.value.length > 0)
-    document.getElementById("addItem").disabled = false;
-  else document.getElementById("addItem").disabled = true;
-}
-
-function alterInput(inputElement) {
-  inputElement.disabled = false;
-  inputElement.classList.replace("disabled-description", "description");
-}
-
-function alterEditButtom(editButtonElement, itemId) {
-  let editButtonIcon = document.getElementById("edit_icon_" + itemId);
-  editButtonIcon.classList.replace("fa-pencil", "fa-check");
-  editButtonIcon.style.color = "#26ed49";
-  editButtonElement.onclick = () => saveItemChages(itemId);
-  editButtonElement.classList.replace("edit-button", "edit-button-editable");
-}
-
-function alterDeleteButton(deleteButtonElement, itemId) {
-  let deleteButtonIcon = document.getElementById("remove_icon_" + itemId);
-  deleteButtonIcon.classList.replace("fa-trash", "fa-xmark");
-
-  deleteButtonElement.onclick = closeItemEdit;
-  deleteButtonElement.classList.replace(
-    "remove-button",
-    "remove-button-editable"
-  );
 }
 
 function saveItemChages(itemId) {
   let valueInput = document.getElementById("input_" + itemId);
+
   if (valueInput.value && valueInput.value.length > 0)
     updateItem(itemId, valueInput.value);
   else alert("valor inválido");
@@ -108,18 +75,8 @@ function closeItemEdit() {
   displayList();
 }
 
-function onDoneTask(itemId) {
-  let checkbox = document.getElementById("checkbox_" + itemId);
-  let valueInput = document.getElementById("input_" + itemId);
-  let editionButton = document.getElementById("edit_" + itemId);
-  if (checkbox.checked) {
-    valueInput.style.textDecoration = "line-through";
-    editionButton.style.display = "none";
-    updateItem(itemId, null, true);
-  } else {
-    valueInput.style.textDecoration = "none";
-    editionButton.style.display = "block";
-    updateItem(itemId, null, false);
-  }
+function checkItem(itemId) {
+  onDoneTask(updateItem, itemId);
 }
-export { onChangeNewItem, saveNewItem, editItem, removeItem, onDoneTask };
+
+export { onChangeNewItem, saveNewItem, editItem, removeItem, checkItem };
