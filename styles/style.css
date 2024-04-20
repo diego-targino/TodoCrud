@@ -1,0 +1,62 @@
+html {
+	height: 100%;
+	width: 100%;
+}
+
+.list-box {
+	display: flex;
+	padding: 1em 0;
+	flex-direction: column;
+}
+
+.list-item {
+	display: flex;
+	flex-direction: colums;
+	gap: 4em;
+	justify-content: center;
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 0 1em;
+	height: 40px;
+}
+
+.item-buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.item-buttons button {
+	width: 50px;
+	height: 20px;
+	border-radius: 5%;
+}
+
+.description {
+	border: 1px solid gray;
+}
+
+.disabled-description {
+	border: none;
+	background-color: white;
+}
+
+.remove-button {}
+
+.remove-button-editable {
+	
+
+}
+
+.edit-button {}
+
+.edit-button-editable {
+	
+}
+
+.no-content {
+	display: flex;
+
+}
+
+.no-content-icon {}

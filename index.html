@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Todo Crud</title>
+	<link href="/styles/style.css" rel="stylesheet" type="text/css" />
+	<script src="/scripts/listManager.js" type="module"></script>
+</head>
+
+<body>
+	<div>
+		<h1>Todo List</h1>
+		<input type="text" id="newItem" onkeyup="window.onChangeNewItem()" placeholder="Digite uma tarefa">
+		<button id="addItem" class="addItem" onclick="window.saveNewItem()" disabled>Add</button>
+		<div id="list-box" class="list-box">
+		</div>
+	</div>
+	<script type="module">
+		import {saveNewItem, editItem, removeItem, onDoneTask, onChangeNewItem} from "./scripts/listManager.js"
+		window.saveNewItem = saveNewItem;
+		window.editItem = editItem;
+		window.removeItem = removeItem;
+		window.onDoneTask = onDoneTask;
+		window.onChangeNewItem = onChangeNewItem;
+	</script>
+</body>
+
+</html>
